@@ -116,7 +116,8 @@ int main() {
 
         switch (choice) {
             case 1: {
-                int id;
+                int id,flag;
+                flag=0;
                 char name[50];
                 printf("Enter user ID: ");
                 scanf("%d", &id);
@@ -131,12 +132,15 @@ int main() {
                 for (int i = 0; i < numUsers; i++) {
                     if (users[i]->id == id) {
                         printf("%sError: User with the same ID already exists.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+                        flag=1;
                         break;
                     }
                 }
+                if(flag==0){
+                    users[numUsers++] = createUser(id, name);
+                    printf("%sUser added successfully.%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
 
-                users[numUsers++] = createUser(id, name);
-                printf("%sUser added successfully.%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                }
                 break;
             }
             case 2: {
