@@ -58,6 +58,40 @@ bool isFriend(User* user1, User* user2) {
     return false;
 }
 
+void removeFriend(User* user1, User* user2) {
+    int index1 = -1, index2 = -1;
+
+    for (int i = 0; i < user1->numFriends; i++) {
+        if (user1->friends[i] == user2) {
+            index1 = i;
+            break;
+        }
+    }
+
+    for (int i = 0; i < user2->numFriends; i++) {
+        if (user2->friends[i] == user1) {
+            index2 = i;
+            break;
+        }
+    }
+
+    if (index1 != -1 && index2 != -1) {
+        for (int i = index1; i < user1->numFriends - 1; i++) {
+            user1->friends[i] = user1->friends[i + 1];
+        }
+        for (int i = index2; i < user2->numFriends - 1; i++) {
+            user2->friends[i] = user2->friends[i + 1];
+        }
+
+        user1->numFriends--;
+        user2->numFriends--;
+
+        printf("%sFriendship removed successfully between %s and %s.%s\n", ANSI_COLOR_GREEN, user1->name, user2->name, ANSI_COLOR_RESET);
+    } else {
+        printf("%sError: Users are not friends.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    }
+}
+
 void recommendFriends(User* user) {
     printf("\n+---------------------------------------+\n");
     printf("| Mutual Friend Recommendations for %s (User %d) |\n", user->name, user->id);
@@ -94,6 +128,24 @@ void checkFriends(User* user) {
     printf("+-------------------------------+\n");
 }
 
+void displayGraph(User* users[], int numUsers, int choice) {
+    printf("\nGraph Visualization:\n");
+
+    if (choice == 2) {
+        for (int i = 0; i < numUsers; i++) {
+            printf("User %d (%s)\n", users[i]->id, users[i]->name);
+
+            for (int j = 0; j < users[i]->numFriends; j++) {
+                printf("|--- User %d (%s)\n", users[i]->friends[j]->id, users[i]->friends[j]->name);
+            }
+
+            printf("\n");
+        }
+    } else {
+        printf("%sError: Invalid choice for graph visualization.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    }
+}
+
 int main() {
     User* users[MAX_USERS];
     int numUsers = 0;
@@ -105,10 +157,12 @@ int main() {
         printf("| %sMenu:                                %s |\n",ANSI_COLOR_YELLOW,ANSI_COLOR_RESET);
         printf("| 1. Add user                           |\n");
         printf("| 2. Add friend                         |\n");
-        printf("| 3. Recommend friends                  |\n");
-        printf("| 4. List Users                         |\n");
-        printf("| 5. Check Friends                      |\n");
-        printf("| 6. Exit                               |\n");
+        printf("| 3. Remove friend                      |\n");
+        printf("| 4. Recommend friends                  |\n");
+        printf("| 5. List Users                         |\n");
+        printf("| 6. Check Friends                      |\n");
+        printf("| 7. Display Graph                      |\n");
+        printf("| 8. Exit                               |\n");
         printf("+---------------------------------------+\n");
         printf("Enter your choice: ");
         int choice;
@@ -168,6 +222,30 @@ int main() {
                 break;
             }
             case 3: {
+                int id1, id2;
+                printf("Enter user IDs to remove friendship: ");
+                scanf("%d %d", &id1, &id2);
+
+                User* user1 = NULL;
+                User* user2 = NULL;
+
+                for (int i = 0; i < numUsers; i++) {
+                    if (users[i]->id == id1) {
+                        user1 = users[i];
+                    }
+                    if (users[i]->id == id2) {
+                        user2 = users[i];
+                    }
+                }
+
+                if (!user1 || !user2) {
+                    printf("%sError: One or both users not found.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+                } else {
+                    removeFriend(user1, user2);
+                }
+                break;
+            }
+            case 4: {
                 int id;
                 printf("Enter user ID for friend recommendations: ");
                 scanf("%d", &id);
@@ -187,10 +265,10 @@ int main() {
                 }
                 break;
             }
-            case 4:
+            case 5:
                 listUsers(users, numUsers);
                 break;
-            case 5: {
+            case 6: {
                 int id;
                 printf("Enter user ID to check friends: ");
                 scanf("%d", &id);
@@ -210,7 +288,11 @@ int main() {
                 }
                 break;
             }
-            case 6:
+            case 7: {
+                displayGraph(users, numUsers, 2);
+                break;
+            }
+            case 8:
                 // Clean up memory
                 for (int i = 0; i < numUsers; i++) {
                     free(users[i]);
