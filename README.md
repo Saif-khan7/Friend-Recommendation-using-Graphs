@@ -25,9 +25,9 @@ Follow the on-screen menu to interact with the friend recommender system.
 ## Future Enhancements:
 The project is open to future enhancements, including:
 
-> Advanced recommendation algorithms.
-> User engagement features such as real-time notifications.
-> Integration with external platforms.
+- Advanced recommendation algorithms.
+- User engagement features such as real-time notifications.
+- Integration with external platforms.
 
 
 
