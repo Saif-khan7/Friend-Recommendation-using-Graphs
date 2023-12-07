@@ -11,8 +11,8 @@ The Friend Recommender project is a social network application that leverages gr
 - Friend Checking: Check the list of friends for a specific user
 
 ## Requirements:
-C compiler (e.g., GCC)
-Standard C libraries
+- C compiler (e.g., GCC)
+- Standard C libraries
 
 ## Setup:
 Clone the repository to your local machine.
@@ -25,10 +25,9 @@ Follow the on-screen menu to interact with the friend recommender system.
 ## Future Enhancements:
 The project is open to future enhancements, including:
 
-Advanced recommendation algorithms.
-User engagement features such as real-time notifications.
-Privacy controls and anonymous friend requests.
-Integration with external platforms.
+> Advanced recommendation algorithms.
+> User engagement features such as real-time notifications.
+> Integration with external platforms.
 
 
 
