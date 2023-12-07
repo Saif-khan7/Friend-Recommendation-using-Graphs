@@ -1,4 +1,4 @@
-# Friend-Recommendation-using-Graphs
+# Friend Recommendation using Graphs
 
 ## Overview
 The Friend Recommender project is a social network application that leverages graph data structures to provide intelligent friend suggestions. This project aims to enhance user connections within the network by recommending potential friends based on existing relationships.
